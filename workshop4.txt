@@ -1,0 +1,269 @@
+SOAL 4.3 TRANSACTION
+1.
+●	Mulai transaction
+
+MariaDB [dbpos_sib6]> START TRANSACTION;
+Query OK, 0 rows affected (0.000 sec)
+
+●	Insert data produk sebanyak 3 record
+
+MariaDB [dbpos_sib6]> INSERT INTO produk (kode, nama, harga_beli, harga_jual, stok, min_stok, foto, jenis_produk_id, deskripsi) VALUE
+S
+    -> ('RT001', 'Roti', '10000', '15000', '20', '8', '', '6', ''),
+    -> ('KP561', 'Kopi Susu', '8000', '10000', '15', '10', '', '3', ''),
+    -> ('ML112', 'Molto', '12000', '18000', '25', '8', '', '5', '');
+Query OK, 3 rows affected (0.001 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [dbpos_sib6]> SELECT * FROM produk;
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| id | kode   | nama              | harga_beli | harga_jual | stok | min_stok | foto                   | deskripsi
+
+
+                                                             | jenis_produk_id |
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+|  1 | TV01   | Televisi 21 inchs |    3500000 |   50500000 |    5 |        2 |                        | NULL
+
+
+                                                             |               1 |
+|  2 | TV02   | Televisi 40 inch  |    5500000 |    7440000 |    4 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+|  3 | K001   | Kulkas 2 pintu    |    3500000 |    4680000 |    6 |        2 |                        | NULL
+
+
+                                                             |               1 |
+|  4 | M001   | Meja Makan        |     500000 |     600000 |    4 |        3 | NULL                   | NULL
+
+
+                                                             |               2 |
+|  5 | TK01   | Teh Kotak         |       3000 |       3500 |    6 |       10 | foto-5.png             | NULL
+
+
+                                                             |               4 |
+|  6 | PC01   | PC Desktop HP     |    7000000 |    9984000 |    9 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+|  7 | TB01   | Teh Botol         |       2000 |       2500 |   53 |       10 | foto-7.jpg             | NULL
+
+
+                                                             |               4 |
+|  8 | AC01   | Notebook Acer S   |    8000000 |   11232000 |    7 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+|  9 | LN01   | Notebook Lenovo   |    9000000 |   12480000 |    9 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+| 11 | L005   | Laptop Lenovo     |   13000000 |   16000000 |    5 |        2 |                        | NULL
+
+
+                                                             |               1 |
+| 15 | L112   | Kopi              |      20000 |      30000 |   10 |       15 | foto-15.png            | Luwak White Coffee merupakan bubuk biji kopi luwak yang dikombinasikan dengan gurihnya krimer serta manisnya gula. Keharuman kopi serta rasa manisnya yang pas juga membuat popularitas Luwak White Coffee melejit. |               4 |
+| 16 | L113   | Teh Sosro 2       |      10000 |      15000 |   10 |       12 | .png                   | NULL
+
+
+                                                             |               1 |
+| 18 | L0015  | Laptop Asus       |    3000000 |    5000000 |   10 |       20 | foto-65542ffa66604.jpg | NULL
+
+
+                                                             |               1 |
+| 19 | TV0115 | Televisi 22 inc`  |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 20 | TV0116 | Televisi 23 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+                                                             |               1 |
+| 21 | TV0117 | Televisi 24 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 22 | TV0118 | Televisi 25 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 24 | TV0120 | Televisi 27 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+                                                             |               1 |
+| 25 | TV0121 | Televisi 28 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 26 | TV0122 | Televisi 29 inc   |    3500000 |   50500000 |
+ 5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 27 | THP001 | Teh Pucuk         |       4000 |       5000 |   10 |        2 | pucuk.jpg              | Teh pucuk adalah
+
+
+                                                             |               4 |
+| 28 | THP002 | Teh Pucuk2        |       4000 |       5000 |   10 |        2 | pucuk.jpg              | Teh pucuk adalah
+
+                                                             |               4 |
+| 35 | RT001  | Roti              |      10000 |      15000 |   20 |        8 |                        |
+
+
+                                                             |               6 |
+| 36 | KP561  | Kopi Susu         |       8000 |      10000 |   15 |       10 |                        |
+
+
+                                                             |               3 |
+| 37 | ML112  | Molto             |      12000 |      18000 |   25 |        8 |                        |
+
+
+                                                             |               5 |
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+
+●	Update data stok salah satu produk
+MariaDB [dbpos_sib6]> UPDATE produk SET stok = 30 WHERE nama = '
+Molto';
+Query OK, 1 row affected (0.038 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [dbpos_sib6]> SELECT * FROM produk;
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+| id | kode   | nama              | harga_beli | harga_jual | stok | min_stok | foto                   | deskripsi
+
+
+                                                             | jenis_produk_id |
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+|  1 | TV01   | Televisi 21 inchs |    3500000 |   50500000 |    5 |        2 |                        | NULL
+
+
+                                                             |               1 |
+|  2 | TV02   | Televisi 40 inch  |    5500000 |    7440000 |    4 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+|  3 | K001   | Kulkas 2 pintu    |    3500000 |    4680000 |    6 |        2 |                        | NULL
+
+
+                                                             |               1 |
+|  4 | M001   | Meja Makan        |     500000 |     600000 |    4 |        3 | NULL                   | NULL
+
+
+                                                             |               2 |
+|  5 | TK01   | Teh Kotak         |       3000 |       3500 |    6 |       10 | foto-5.png             | NULL
+
+
+                                                             |               4 |
+|  6 | PC01   | PC Desktop HP     |    7000000 |    9984000 |    9 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+|  7 | TB01   | Teh Botol         |       2000 |       2500 |   53 |       10 | foto-7.jpg             | NULL
+
+
+                                                             |               4 |
+|  8 | AC01   | Notebook Acer S   |    8000000 |   11232000 |    7 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+|  9 | LN01   | Notebook Lenovo   |    9000000 |   12480000 |    9 |        2 | NULL                   | NULL
+
+
+                                                             |               5 |
+| 11 | L005   | Laptop Lenovo     |   13000000 |   16000000 |    5 |        2 |                        | NULL
+
+
+                                                             |               1 |
+| 15 | L112   | Kopi              |      20000 |      30000 |   10 |       15 | foto-15.png            | Luwak White Coffee merupakan bubuk biji kopi luwak yang dikombinasikan dengan gurihnya krimer serta manisnya gula. Keharuman kopi serta rasa manisnya yang pas juga membuat popularitas Luwak White Coffee melejit. |               4 |
+| 16 | L113   | Teh Sosro 2       |      10000 |      15000 |   10 |       12 | .png                   | NULL
+
+
+                                                             |               1 |
+| 18 | L0015  | Laptop Asus       |    3000000 |    5000000 |   10 |       20 | foto-65542ffa66604.jpg | NULL
+
+
+                                                             |               1 |
+| 19 | TV0115 | Televisi 22 inc`  |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 20 | TV0116 | Televisi 23 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+                                                             |               1 |
+| 21 | TV0117 | Televisi 24 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 22 | TV0118 | Televisi 25 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 24 | TV0120 | Televisi 27 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 25 | TV0121 | Televisi 28 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 26 | TV0122 | Televisi 29 inc   |    3500000 |   50500000 |    5 |        2 | NULL                   | NULL
+
+
+                                                             |               1 |
+| 27 | THP001 | Teh Pucuk         |       4000 |       5000 |   10 |        2 | pucuk.jpg              | Teh pucuk adalah
+
+
+                                                             |               4 |
+| 28 | THP002 | Teh Pucuk2        |       4000 |       5000 |   10 |        2 | pucuk.jpg              | Teh pucuk adalah
+
+                                                             |               4 |
+| 35 | RT001  | Roti              |      10000 |      15000 |   20 |        8 |                        |
+
+
+                                                             |               6 |
+| 36 | KP561  | Kopi Susu         |       8000 |      10000 |   15 |       10 |                        |
+
+
+                                                             |               3 |
+| 37 | ML112  | Molto             |      12000 |      18000 |   30 |        8 |                        |
+
+
+                                                             |               5 |
++----+--------+-------------------+------------+------------+------+----------+------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+
+25 rows in set (0.001 sec)
+
+●	Buat savepoint
+
+MariaDB [dbpos_sib6]> savepoint SP;
+Query OK, 0 rows affected (0.001 sec)
+
+●	Hapus salah satu data pembayaran
+
+MariaDB [dbpos_sib6]> DELETE from pembayaran where id = 4;
+Query OK, 1 row affected (0.018 sec)
+
+●	Kembali ke savepoint
+
+MariaDB [dbpos_sib6]> ROLLBACK;
+Query OK, 0 rows affected (0.001 sec)
+
+●	Update data iuran salah satu kartu
+
+MariaDB [dbpos_sib6]> UPDATE kartu SET iuran = 4000;
+Query OK, 5 rows affected (0.006 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+MariaDB [dbpos_sib6]> select * from kartu;
++----+------+---------------+--------+-------+
+| id | kode | nama          | diskon | iuran |
++----+------+---------------+--------+-------+
+|  1 | GOLD | Gold Utama    |   0.05 |  4000 |
+|  2 | PLAT | Platinum Jaya |    0.1 |  4000 |
+|  3 | SLV  | Silver        |  0.025 |  4000 |
+|  4 | NO   | Non Member    |      0 |  4000 |
+|  7 | PGU  | Perunggu      |    0.5 |  4000 |
++----+------+---------------+--------+-------+
+5 rows in set (0.001 sec)
+
+
+●	Akhiri transaction dengan commit
+
+MariaDB [dbpos_sib6]> commit;
+Query OK, 0 rows affected (0.001 sec)
