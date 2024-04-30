@@ -1,0 +1,108 @@
+Microsoft Windows [Version 10.0.22631.3447]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\asusb>cd \xampp\mysql
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use dbpos_sib6;
+Database changed
+MariaDB [dbpos_sib6]> show databse;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databse' at line 1
+MariaDB [dbpos_sib6]> show databses;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databses' at line 1
+MariaDB [dbpos_sib6]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbpos_sib6         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+6 rows in set (0.014 sec)
+
+MariaDB [dbpos_sib6]> use dbpos_sib6;
+Database changed
+MariaDB [dbpos_sib6]> DELIMITER $$
+MariaDB [dbpos_sib6]> CREATE FUNCTION kategori_harga(harga DOUBL
+E)
+    -> RETURNS VARCHAR(20)
+    -> BEGIN
+    -> DECLARE kategori VARCHAR(20);
+    ->  IF harga <= 500000 THEN SET kategori = 'Murah';
+    -> ELSEIF harga <= 3000000 THEN SET kategori = 'Sedang';
+    -> ELSEIF harga <= 10000000 THEN SET kategori = 'Mahal';
+    -> ELSE
+    -> SET kategori = 'Sangat Mahal';
+    -> END IF;
+    -> RETURN kategori;
+    -> END $$
+Query OK, 0 rows affected, 5 warnings (0.027 sec)
+
+MariaDB [dbpos_sib6]>  DELIMITER ;
+MariaDB [dbpos_sib6]> SELECT * FROM pesanan_items;
++----+-----------+------------+------+---------+
+| id | produk_id | pesanan_id | qty  | harga   |
++----+-----------+------------+------+---------+
+|  1 |         1 |          1 |    1 | 5040000 |
+|  2 |         3 |          1 |    1 | 4680000 |
+|  3 |         5 |          2 |    5 |    3500 |
+|  6 |         5 |          3 |   10 |    3500 |
+|  7 |         1 |          3 |    1 | 5040000 |
+|  9 |         5 |          5 |   10 |    3500 |
+| 10 |         5 |          6 |   20 |    3500 |
++----+-----------+------------+------+---------+
+7 rows in set (0.001 sec)
+
+MariaDB [dbpos_sib6]> SELECT id, qty, kategori_harga(harga) AS kategori_harga FROM pesanan_items;
++----+------+----------------+
+| id | qty  | kategori_harga |
++----+------+----------------+
+|  1 |    1 | Mahal          |
+|  2 |    1 | Mahal          |
+|  3 |    5 | Murah          |
+|  6 |   10 | Murah          |
+|  7 |    1 | Mahal          |
+|  9 |   10 | Murah          |
+| 10 |   20 | Murah          |
++----+------+----------------+
+7 rows in set (0.001 sec)
+
+MariaDB [dbpos_sib6]> SELECT * FROM pembelian;
++----+------------+-------+-----------+--------+---------+-----------+
+| id | tanggal    | nomor | produk_id | jumlah | harga   | vendor_id |
++----+------------+-------+-----------+--------+---------+-----------+
+|  1 | 2019-10-10 | P001  |         1 |      2 | 3500000 |         1 |
+|  2 | 2019-11-20 | P002  |         2 |      5 | 5500000 |         2 |
+|  3 | 2019-12-12 | P003  |         2 |      5 | 5400000 |         1 |
+|  4 | 2020-01-20 | P004  |         7 |    200 |    1800 |         3 |
+|  5 | 2020-01-20 | P005  |         5 |    100 |    2300 |         3 |
++----+------------+-------+-----------+--------+---------+-----------+
+5 rows in set (0.004 sec)
+
+MariaDB [dbpos_sib6]> SELECT id, tanggal, nomor, jumlah, kategori_harga(harga) AS kategori_harga FROM pembelian;
++----+------------+-------+--------+----------------+
+| id | tanggal    | nomor | jumlah | kategori_harga |
++----+------------+-------+--------+----------------+
+|  1 | 2019-10-10 | P001  |      2 | Mahal          |
+|  2 | 2019-11-20 | P002  |      5 | Mahal          |
+|  3 | 2019-12-12 | P003  |      5 | Mahal          |
+|  4 | 2020-01-20 | P004  |    200 | Murah          |
+|  5 | 2020-01-20 | P005  |    100 | Murah          |
++----+------------+-------+--------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbpos_sib6]>
